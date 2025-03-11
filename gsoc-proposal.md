@@ -1,4 +1,17 @@
-> [!CAUTION]
+## Personal Details
+
+Name: Ankit Khushwaha <br>
+University: Indian Institute of Technology Dharwad <br>
+Time Zone: IST (GMT+5:30) <br>
+Email: ankitkhushwaha.dev@gmail.com <br>
+Github username: [ankitkhushwaha](https://github.com/ankitkhushwaha/) <br>
+Slack username: [Ankit Khushwaha](https://stingraysoftware.slack.com/team/U08DABBB6EA) <br>
+
+## Personal Background
+
+Hey there, I'm Ankit Khushwaha, a sophomore at [Indian Institute of Technology, Dharwad](https://en.wikipedia.org/wiki/IIT_Dharwad) pursuing Bachelor of Science in Physics. I'm genuinely interested in open-source, 
+
+<!-- > [!CAUTION]
 > Do not edit this template, copy its content and [create a new page](https://docs.github.com/en/communities/documenting-your-project-with-wikis/adding-or-editing-wiki-pages) following this format:
 > `GSoC-<YEAR>-<sub-org> <Your Name>:<Project Name>`.
 
@@ -78,4 +91,4 @@ application deadline (approx end of March - [check the timeline for exact dates]
 
 
 
-
+ -->
