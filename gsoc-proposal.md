@@ -11,6 +11,23 @@ Slack username: [Ankit Khushwaha](https://stingraysoftware.slack.com/team/U08DAB
 
 Hey there, I'm Ankit Khushwaha, a sophomore at [Indian Institute of Technology, Dharwad](https://en.wikipedia.org/wiki/IIT_Dharwad) pursuing Bachelor of Science in Physics. I'm genuinely interested in open-source, 
 
+
+## GSoC & I
+
+### **Have I previously participated successfully in GSoC? When? With which project?**
+
+No, I haven’t.
+
+### **Are you also applying to other projects?**
+
+No, I’m not.
+
+### **Are you eligible to receive payments from Google?**
+
+Yes, I am.
+
+### **How much time do you plan to invest in the project before, during, and after the Summer of Code?**
+
 <!-- > [!CAUTION]
 > Do not edit this template, copy its content and [create a new page](https://docs.github.com/en/communities/documenting-your-project-with-wikis/adding-or-editing-wiki-pages) following this format:
 > `GSoC-<YEAR>-<sub-org> <Your Name>:<Project Name>`.
