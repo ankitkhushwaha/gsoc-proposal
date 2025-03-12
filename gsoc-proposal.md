@@ -1,3 +1,5 @@
+# Interactive Database for X-ray observations
+
 ## Personal Details
 
 Name: Ankit Khushwaha <br>
@@ -9,7 +11,16 @@ Slack username: [Ankit Khushwaha](https://stingraysoftware.slack.com/team/U08DAB
 
 ## Personal Background
 
-Hey there, I'm Ankit Khushwaha, a sophomore at [Indian Institute of Technology, Dharwad](https://en.wikipedia.org/wiki/IIT_Dharwad) pursuing Bachelor of Science in Physics. I'm genuinely interested in open-source, 
+Hey, I'm Ankit Khushwaha, a third year undergraduate at Indian Institute of Technology, Dharwad pursuing Bachelor of Science in Physics. I'm genuinely interested in open-source, I have been programming for the past three years,primarily using
+Python. I’ve been using Python for tasks like web scraping, automation, and scientific computing. 
+
+
+## Project Proposal
+
+### Abstract
+
+Currently approach of studying accreting black holes by considering only a few observations and only one data product at a time. This case-by-case approach is useful to study specific characteristics of the sources such as measuring the spin and mass of the black hole. However, this approach is insufficient if one wishes to gain an understanding of the general phenomenology shown by accreting black holes. This proposal introduces a project a tool that analyzes, stores, and organizes key data products of multiple observations in a database.
+
 
 
 ## GSoC & I
