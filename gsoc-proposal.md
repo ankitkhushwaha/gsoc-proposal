@@ -8,19 +8,166 @@ Time Zone: IST (GMT+5:30) <br>
 Email: ankitkhushwaha.dev@gmail.com <br>
 Github username: [ankitkhushwaha](https://github.com/ankitkhushwaha/) <br>
 Slack username: [Ankit Khushwaha](https://stingraysoftware.slack.com/team/U08DABBB6EA) <br>
+Mentor: [mgullik](https://github.com/mgullik), [matteobachetti](https://github.com/matteobachetti)
+
+### Platform Details
+
+- OS: Ubuntu 22.04
+- Editor: VS Code
 
 ## Personal Background
 
-Hey, I'm Ankit Khushwaha, a third year undergraduate at Indian Institute of Technology, Dharwad pursuing Bachelor of Science in Physics. I'm genuinely interested in open-source, I have been programming for the past three years,primarily using
-Python. I’ve been using Python for tasks like web scraping, automation, and scientific computing. 
+Hey, I'm Ankit Khushwaha, a third year undergraduate at Indian Institute of Technology, Dharwad pursuing Bachelor of Science in Physics. I have been programming for the past three years, primarily using Python. I’ve been using Python for tasks like web scraping, automation, and scientific computing. I'm genuinely interested in open-source and have been contributing to since december 2024.
 
 
 ## Project Proposal
 
 ### Abstract
 
-Currently approach of studying accreting black holes by considering only a few observations and only one data product at a time. This case-by-case approach is useful to study specific characteristics of the sources such as measuring the spin and mass of the black hole. However, this approach is insufficient if one wishes to gain an understanding of the general phenomenology shown by accreting black holes. This proposal introduces a project a tool that analyzes, stores, and organizes key data products of multiple observations in a database.
+The current approach to studying accreting black holes by considering only a few observations and only one data product at a time. This case-by-case approach is useful to study specific characteristics of the sources such as measuring the spin and mass of the black hole. However, this approach is insufficient to gain an understanding of the general phenomenology shown by accreting black holes. This project proposes the development of an interactive tool that systematically analyzes, stores, and organizes key data products from multiple observations. By enabling comprehensive visualization and comparison of X-ray spectral and timing properties over time, this tool will facilitate more efficient scientific decision-making and a deeper understanding of black hole evolution.
 
+
+## Benefits to the Community
+
+Currently, researchers analyze **only a few observations at a time**, limiting our understanding of the general behavior of black holes. This project will:
+
+- Enable **large-scale classification and visualization** of X-ray observations.
+- Provide a **single framework** to explore multiple data products (e.g., spectral and timing properties).
+- **Speed up scientific decision-making** by allowing easy comparison across different telescopes.
+- Allow researchers to **discover patterns** and classify observations using **machine learning (ML)**.
+
+## Final Deliverables
+- Analysis ready software packed with docker and also with manual installtion of Heasarc for more performance.
+
+# Notes
+the ability to visualize source behaviour over time across multiple metrics will guide our choices for which observations are best to make in future, as well as which observatories to use. It will also allow us to make quicker decisions on how to use the data that is already accessible for a given project<br>
+
+
+
+## IMPLEMENTATION
+### 1. Installtion of Required Packages
+This Project requires the [Heasarc Software](https://heasarc.gsfc.nasa.gov/docs/software/lheasoft/download-go.html), we will first install the [Heasarc](https://heasarc.gsfc.nasa.gov/docs/software/lheasoft/download-go.html) software in isolated enviroment (To avoid confict with other software like CIAO or XMM-SAS) with  [hwrap script](https://heasarc.gsfc.nasa.gov/docs/software/lheasoft/hwrap.html) with required calibration files and geomagnetic quantities,Since the installation step are too complicated,we will document the installtion step (Pre GSOC).<br>
+This is [instruction](link) that i wrote for the installtion of Heasarc Software.
+
+
+### 1. **Fetch the X-ray observation data from archive**<br>
+We will query the the observation data from Heasarc [FTP Website](https://heasarc.gsfc.nasa.gov/FTP/nicer/data/obs/) by [Astroquery.Heasarc](https://astroquery.readthedocs.io/en/latest/heasarc/heasarc.html).
+
+```python
+from astroquery.heasarc import Heasarc
+from astropy.coordinates import SkyCoord
+
+pos = SkyCoord.from_name('Cas A')
+tab = Heasarc.query_region(pos, catalog='nicermastr')
+
+tab = tab[tab['exposure'] > 0]
+links = Heasarc.locate_data(tab[:3])
+links['access_url'].pprint()
+Heasarc.download_data(links=links[1:2]) # download the files in current folder
+```
+
+### 2. Running the Heasarc Command with python
+For the cleaning of observation files of various sources (eg. Nicer, NuSTAR), we need the HEASoft tools, which runs on bash. But
+these commands also can be run in Python with [HEASoftpy](https://heasarc.gsfc.nasa.gov/lheasoft/heasoftpy/). It provides python wrappers that call the HEASoft tools, allowing for easy integration into other python code.
+
+
+```python
+import heasoftpy as hsp
+nicerl3 = hsp.HSPTask('nicerl3-spect')
+nicerl3.clobber="yes"
+nicerl3.geomag_path=paths.geomag_path
+nicerl3(infile='5010080245')
+```
+
+
+<!-- ### 3. Pre-processing / Cleaning the Event files<br>
+Processing the files before analysis is a crucial step in extracting useful data. -->
+
+### 3. Nicer Data Processing Pipeline<br>
+Processing the observation files before analysis is a crucial step in extracting useful insights data.<br>
+Heasarc provide [streamlined steps](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/) for processing the Nicer observation files.<br>
+<img src="assets/image.png" alt="Nicer Data Processing Pipeline" width="500px" height="500px"><br>
+Figure 1.This is Wokrflow showing nicerl3-spect and nicerl3-lc to make standard spectral and light curve products.<br>
+
+Before starting the analysis, we need to clean the event file using `nicerl2`.This tool streamlines the standard pipeline processing of an observation by eliminating intermediate steps.
+
+<!-- Bash<br>
+```bash
+cd /path/to/observation/data  # observation directory
+nicerl2 indir=1234567890 clobber=YES 
+
+# indir=1234567890 is name of observation directory
+# clobber=YES means nicerl2 will overwrite existing filter files and higher level event files
+``` -->
+
+```python
+import os
+import heasoftpy as hsp
+os.chdir('/path/to/observation/data')
+nicerl2 = hsp.HSPTask('nicerl2')
+nicerl2.clobber="yes"
+nicerl2(infile='1234567890')
+```
+
+The extraction of Spectrum can be done from the observation file with [nicerl3-spect](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/nicerl3-spect/)
+
+The `nicerl3-spect` task requires the output of the `nicerl2` task. The task will look in the supplied input directory name for the subdirectory xti/event_cl.
+
+```
+import os
+import heasoftpy as hsp
+os.chdir('/path/to/observation/data')
+nicerl3 = hsp.HSPTask('nicerl3-spect')
+nicerl3.clobber="yes"
+nicerl3(infile='1234567890')
+
+```
+Upon completion, nicerl3-spect will processed the `spectrum`, `ARF`, `RMF`, `SCORPEON background`, `background RMF`, `Sky ARF`, `"Load" file`, `Graphical output products`.
+
+
+Extraction of Power spectrum.
+
+
+**Note**: There is also more useful [resource](https://github.com/matteolucchini1/Chromie) that can be used for impleting this.
+
+
+
+
+
+
+
+
+
+
+fetch the x ray observation data from archive & write unit tests for this
+clean the event files or spectral data using HEASOFT tools and Stingray functionality  & write unit tests for this
+storing it in the database  & write unit tests for this 
+implement the various techniques for analysis leveraging stingray functionalities.  & write unit tests for this
+implement the front-end part and so user can interact with it.  & write unit tests for this
+implement the Ml part for further classification.  & write unit tests for this
+Add user docs and developer docs
+
+my implementation
+
+### Project Structure
+```
+project_name/
+│── retrieve_data_pipeline/       # Reterive the data from archive   
+│── scripts/                # Documentation files  
+│── docs/                # Documentation files  
+│── src/                 # Main source code  
+│   │── module1/  
+│   │── module2/  
+│── tests/               # Unit tests  
+│── data/                # Sample datasets (if applicable)  
+│── README.md            # Project overview  
+│── setup.py             # Installation script  
+│── requirements.txt     # Dependencies  
+```
+<!-- 
+The current approach to studying accreting black holes is largely case-by-case, focusing on a limited number of observations and analyzing only one data product at a time. 
+While this method is effective for specific studies, such as measuring a black hole’s spin or mass, it is insufficient for understanding the broader phenomenology of these systems. 
+This project proposes the development of an interactive tool that systematically analyzes, stores, and organizes key data products from multiple observations in a structured database. By enabling comprehensive visualization and comparison of X-ray spectral and timing properties over time, this tool will facilitate more efficient scientific decision-making and a deeper understanding of black hole evolution. -->
 
 
 ## GSoC & I
@@ -39,6 +186,10 @@ Yes, I am.
 
 ### **How much time do you plan to invest in the project before, during, and after the Summer of Code?**
 
+## Timeline
+
+### Pre-GSOC period (Before May 8)
+Became familiar with Heasarc, Installing the isolated enviorment for Heasarc
 <!-- > [!CAUTION]
 > Do not edit this template, copy its content and [create a new page](https://docs.github.com/en/communities/documenting-your-project-with-wikis/adding-or-editing-wiki-pages) following this format:
 > `GSoC-<YEAR>-<sub-org> <Your Name>:<Project Name>`.
