@@ -12,7 +12,7 @@ Mentor: [mgullik](https://github.com/mgullik), [matteobachetti](https://github.c
 
 ### Platform Details
 
-- OS: Ubuntu 22.04
+- OS: Ubuntu 24.04.2 LTS
 - Editor: VS Code
 
 ## Personal Background
@@ -172,9 +172,11 @@ print(result)
 **Note**: There is more useful [resource](https://github.com/matteolucchini1/Chromie) that can be used for implementing this. Although this works well for data processing and extractions of spectrum(after bit of minor changes), but the visualization part doesn't seems to work, also this pipeline produces plots in pdf.
 #### Analysis of the Observation Data
 
-For the analysis of NICER observations, there are some of useful resources, [nicer-ixpe workshop](https://github.com/nmik/nicer-ixpe), [HEASARC-PyXspec notebooks](https://github.com/HEASARC/PyXspec-Jupyter-notebooks), which have various usefull notebooks explaining spectrum, light-curve, Spectral-Timing analysis by leveraging `Stingray`.
+For the analysis of NICER observations, there are some of useful resources [RXTE Cook Book](https://heasarc.gsfc.nasa.gov/docs/xte/recipes/lc_color.html#colors) (Explain How to create and plot light curves, hardness ratios and color-color diagrams),<br> [nicer-ixpe workshop](https://github.com/nmik/nicer-ixpe), [HEASARC-PyXspec notebooks](https://github.com/HEASARC/PyXspec-Jupyter-notebooks), which have various usefull notebooks explaining spectrum, light-curve, Spectral-Timing analysis by leveraging `Stingray`.
 
 **UI for the Particular Observation of Database**<br>
+for a particular Observation Database will show the graphical input(PNG file) for quicklook. <br>Although there are alot more methods to add, that i did'nt included in UI. For example Periodogram modeling, Power colors, Lags and coherence and cross spectrum, Spectral timing, Covariance and RMS spectrum.<br>
+(The intuition for this i have taken from [here](https://github.com/nmik/nicer-ixpe/blob/main/NICER/spectral_timing/Spectral%20Timing%20Exploration.ipynb))
 <img src="assets/nicer_obs_ui.png" alt="Nicer Observation UI" width="800px" height="600px"><br>
 
 <!-- ![Nicer Observation UI](assets/nicer_obs_ui.png)<br> -->

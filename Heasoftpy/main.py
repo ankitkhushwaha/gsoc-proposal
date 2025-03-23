@@ -31,10 +31,13 @@ print(os.path.exists('5010080245/xti/event_cl/ni5010080245mpu7_sr.pha'))
 
 from xspec import *
 s = Spectrum("5010080245/xti/event_cl/ni5010080245mpu7_sr.pha")
-Model("phabs*pow")
-Fit.perform()
-Plot.device = "/xs"
-Plot("data")
+# Model("phabs*pow")
+# Fit.perform()
+# Plot.device = "/xs"
+# Plot("ratio")
+
+
+print(AllModels.show())
 
 
 # Plot.device = "/xs"
