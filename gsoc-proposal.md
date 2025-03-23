@@ -39,8 +39,8 @@ Currently, researchers analyze **only a few observations at a time**, limiting o
 ## Final Deliverables
 - Analysis ready software packed with docker and also with manual installtion of Heasarc for more performance.
 
-# Notes
-the ability to visualize source behaviour over time across multiple metrics will guide our choices for which observations are best to make in future, as well as which observatories to use. It will also allow us to make quicker decisions on how to use the data that is already accessible for a given project<br>
+<!-- # Notes
+the ability to visualize source behaviour over time across multiple metrics will guide our choices for which observations are best to make in future, as well as which observatories to use. It will also allow us to make quicker decisions on how to use the data that is already accessible for a given project<br> -->
 
 
 
@@ -66,6 +66,10 @@ links['access_url'].pprint()
 Heasarc.download_data(links=links[1:2]) # download the files in current folder
 ```
 
+#### This is the UI for the Heasarc data petrieve pipeline.<br> 
+The user inputs an object name, selects multiple missions, and fetches observational data. The retrieved data appears in a table in pop-up window, allowing the user to select multiple entries and download them simultaneously, and filter their desired data.
+![Retrieve Data](assets/retrieve.png)<br>
+
 ### 2. Running the Heasarc Command with python
 For the cleaning of observation files of various sources (eg. Nicer, NuSTAR), we need the HEASoft tools, which runs on bash. But
 these commands also can be run in Python with [HEASoftpy](https://heasarc.gsfc.nasa.gov/lheasoft/heasoftpy/). It provides python wrappers that call the HEASoft tools, allowing for easy integration into other python code.
@@ -86,7 +90,7 @@ Processing the files before analysis is a crucial step in extracting useful data
 ### 3. Nicer Data Processing Pipeline<br>
 Processing the observation files before analysis is a crucial step in extracting useful insights data.<br>
 Heasarc provide [streamlined steps](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/) for processing the Nicer observation files.<br>
-<img src="assets/image.png" alt="Nicer Data Processing Pipeline" width="500px" height="500px"><br>
+<img src="assets/nicer_pipeline.png" alt="Nicer Data Processing Pipeline" width="500px" height="500px"><br>
 Figure 1.This is Wokrflow showing nicerl3-spect and nicerl3-lc to make standard spectral and light curve products.<br>
 
 Before starting the analysis, we need to clean the event file using `nicerl2`.This tool streamlines the standard pipeline processing of an observation by eliminating intermediate steps.
@@ -109,11 +113,11 @@ nicerl2.clobber="yes"
 nicerl2(infile='1234567890')
 ```
 
-The extraction of Spectrum can be done from the observation file with [nicerl3-spect](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/nicerl3-spect/)
+**The extraction of Spectrum** can be done from the observation file with [nicerl3-spect](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/nicerl3-spect/)
 
 The `nicerl3-spect` task requires the output of the `nicerl2` task. The task will look in the supplied input directory name for the subdirectory xti/event_cl.
 
-```
+```python
 import os
 import heasoftpy as hsp
 os.chdir('/path/to/observation/data')
@@ -122,24 +126,51 @@ nicerl3.clobber="yes"
 nicerl3(infile='1234567890')
 
 ```
-Upon completion, nicerl3-spect will processed the `spectrum`, `ARF`, `RMF`, `SCORPEON background`, `background RMF`, `Sky ARF`, `"Load" file`, `Graphical output products`.
+Upon completion, nicerl3-spect will processed the `spectrum`, `ARF`, `RMF`, `SCORPEON background`, `background RMF`, `Sky ARF`, `"Load" file`, `Graphical output` products.
 
 
-Extraction of Power spectrum.
+**Extraction of Power spectrum.**
+
+```python
+nicerl3_lc = hsp.HSPTask('nicerl3-lc')
+nicerl3_lc.pirange = '300-1500'        # channel (energy) range 
+nicerl3_lc.timebin=60.0                # time bin size in seconds 
+nicerl3_lc.clobber='YES'
+result = nicerl3_lc(indir = '7010080341')
+print(result)
+```
+**Note**: There is more useful [resource](https://github.com/matteolucchini1/Chromie) that can be used for implementing this. Although this works well for data processing and extractions of spectrum(after bit of minor changes), but the visualization part doesn't seems to work, also this pipeline produces plots in pdf.
+#### Analysis of the Observation Data
+
+For the analysis of NICER observations, there are some of useful resources, [nicer-ixpe workshop](https://github.com/nmik/nicer-ixpe), [HEASARC-PyXspec notebooks](https://github.com/HEASARC/PyXspec-Jupyter-notebooks), which have various usefull notebooks explaining spectrum, light-curve, Spectral-Timing analysis by leveraging `Stingray`.
+
+**UI for the Particular Observation of Database**<br>
+<img src="assets/nicer_obs_ui.png" alt="Nicer Observation UI" width="800px" height="600px"><br>
+
+<!-- ![Nicer Observation UI](assets/nicer_obs_ui.png)<br> -->
+
+#### Overall directry structure of Cleaned Event files
+```
+Logs/
+Products/
+   Spectra/
+   PSDs/
+   Lightcurves/
+   Plots/
+      Spectra/
+      PSDs/
+      Lightcurves/
+```
+<!-- LagFreq/ -->
 
 
-**Note**: There is also more useful [resource](https://github.com/matteolucchini1/Chromie) that can be used for impleting this.
 
 
 
 
 
 
-
-
-
-
-fetch the x ray observation data from archive & write unit tests for this
+<!-- fetch the x ray observation data from archive & write unit tests for this
 clean the event files or spectral data using HEASOFT tools and Stingray functionality  & write unit tests for this
 storing it in the database  & write unit tests for this 
 implement the various techniques for analysis leveraging stingray functionalities.  & write unit tests for this
@@ -147,7 +178,7 @@ implement the front-end part and so user can interact with it.  & write unit tes
 implement the Ml part for further classification.  & write unit tests for this
 Add user docs and developer docs
 
-my implementation
+my implementation -->
 
 ### Project Structure
 ```

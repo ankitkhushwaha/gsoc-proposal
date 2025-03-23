@@ -1,27 +1,13 @@
-import matplotlib.pyplot as plt
-import numpy as np
-import matplotlib.image as mpimg
+import os
 
-# Load an image
-img = mpimg.imread("your_image.png")
+def list_directory(root_dir):
+    for root, dirs, files in os.walk(root_dir):
+        level = root.replace(root_dir, "").count(os.sep)
+        indent = " " * 4 * level
+        print(f"{indent}{os.path.basename(root)}/")
+        sub_indent = " " * 4 * (level + 1)
+        for file in files:
+            print(f"{sub_indent}{file}")
 
-# Create figure and axis
-fig, ax = plt.subplots()
-
-# Display image
-ax.imshow(img)
-
-# Define points (x, y)
-points = np.array([[100, 150], [200, 300], [400, 100]])
-labels = ["Point A", "Point B", "Point C"]
-
-# Plot points
-ax.scatter(points[:, 0], points[:, 1], color='red', s=100)
-
-# Annotate points
-for i, (x, y) in enumerate(points):
-    ax.annotate(labels[i], (x, y), textcoords="offset points", xytext=(10,10), ha='right',
-                arrowprops=dict(arrowstyle="->", color='blue'))
-
-# Show plot
-plt.show()
+root_directory = "/home/ankit/Development/Heasarc/nicer/Cas_A/output"
+list_directory(root_directory)
