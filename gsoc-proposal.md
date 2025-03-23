@@ -19,6 +19,36 @@ Mentor: [mgullik](https://github.com/mgullik), [matteobachetti](https://github.c
 
 Hey, I'm Ankit Khushwaha, a third year undergraduate at Indian Institute of Technology, Dharwad pursuing Bachelor of Science in Physics. I have been programming for the past three years, primarily using Python. I’ve been using Python for tasks like web scraping, automation, and scientific computing. I'm genuinely interested in open-source and have been contributing to since december 2024.
 
+## My Contribution to Stingray
+
+#### PRs
+1. [Stingray] [Add Jacobian to GeneralizedLorentz1D, SmoothBrokenPowerLaw in stingray.simulator.models
+ #889](https://github.com/StingraySoftware/stingray/pull/889) [Open]
+2. [Stingray] [Add CountSpectrum to docs #884](https://github.com/StingraySoftware/stingray/pull/884) [Merged]
+3. [Stingray] [Add support for reading Fermi/gbm fits file in Eventlist.read #894](https://github.com/StingraySoftware/stingray/pull/894) [Open]
+4. [Stingray] [Remove unused imports #900](https://github.com/StingraySoftware/stingray/pull/900) [Open]
+5. [Stingray] [Add AI-Note #891](https://github.com/StingraySoftware/stingray/pull/891) [Open]
+6. [Stingray] [Fixes upstream Depecration warnings #885](https://github.com/StingraySoftware/stingray/pull/885) [Closed] # Fixes in [#886](https://github.com/StingraySoftware/stingray/pull/886)
+
+#### Issues
+1. [Stingray] [Test failure of Stingray file #882 ](https://github.com/StingraySoftware/stingray/issues/882#issuecomment-2662330600)
+2. [Stingray] [Unused imports within stingray.codebase #899](https://github.com/StingraySoftware/stingray/issues/899) 
+3. [Stingray] [AI note #890](https://github.com/StingraySoftware/stingray/issues/890)
+
+## My Contribution to Openastronomy
+#### PRs
+
+1. [openastronomy.github.io] [Correct broken link in Radis Gsoc Proposal #377](https://github.com/OpenAstronomy/openastronomy.github.io/pull/377) 
+2. [Sunpy](https://github.com/sunpy/sunpy/issues?q=is%3Apr+is%3Aopen+author%3Aankitkhushwaha) # Implemented Various features, improving code performance and fixed bugs.
+3. [sunpy/package-template](https://github.com/sunpy/package-template/issues?q=is%3Apr%20state%3Aopen%20author%3Aankitkhushwaha) # Implemented the Github Workflows for update the repo with package-template
+
+#### Issues
+1. [Astropy/astroquery](https://github.com/astropy/astroquery/issues?q=is%3Aissue%20state%3Aopen%20author%3Aankitkhushwaha) # Raised issues for support some features
+2. [Sunpy](https://github.com/sunpy/sunpy/issues?q=is%3Aissue%20state%3Aopen%20author%3Aankitkhushwaha) # Raised issues for bugs.
+
+<br>
+Apart from this I have also guided the newcomers on Slack by guiding them on how to get started with the project and reviewed their PRs on github.
+<br>
 
 ## Project Proposal
 
