@@ -2,9 +2,11 @@ import os
 import sys
 
 # os.system('heainit') 
-sys.path.insert(0,'/home/ankit/heasoft-6.35src/heasoft-6.35/x86_64-pc-linux-gnu-libc2.39/lib/python')
-import heasoftpy as hsp
+# sys.path.insert(0,'/home/ankit/heasoft-6.35src/heasoft-6.35/x86_64-pc-linux-gnu-libc2.39/lib/python')
 
+import subprocess
+subprocess.run(['source $HEADAS/headas-init.sh'], shell=True, executable="/bin/bash")
+import heasoftpy as hsp
 
 os.chdir('/home/ankit/Development/Heasarc/nicer/Cas_A')
 
