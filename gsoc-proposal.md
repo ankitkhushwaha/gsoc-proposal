@@ -47,7 +47,7 @@ Hey, I'm Ankit Khushwaha, a third year undergraduate at Indian Institute of Tech
 
 1. [openastronomy.github.io] [Correct broken link in Radis Gsoc Proposal #377](https://github.com/OpenAstronomy/openastronomy.github.io/pull/377) 
 2. [Sunpy](https://github.com/sunpy/sunpy/issues?q=is%3Apr+is%3Aopen+author%3Aankitkhushwaha) # Implemented Various features, improving code performance and fixed bugs.
-3. [sunpy/package-template](https://github.com/sunpy/package-template/issues?q=is%3Apr%20state%3Aopen%20author%3Aankitkhushwaha) # Implemented the Github Workflows for update the each repo with package-template.
+3. [sunpy/package-template](https://github.com/sunpy/package-template/issues?q=is%3Apr%20state%3Aopen%20author%3Aankitkhushwaha) # Implemented the Github Workflows to update the each repo with package-template.
 
 #### Issues
 1. [Astropy/astroquery](https://github.com/astropy/astroquery/issues?q=is%3Aissue%20state%3Aopen%20author%3Aankitkhushwaha) # Raised issues to support some features
@@ -225,7 +225,8 @@ class NicerDataPipeline:
 **Note**: There is more useful [resource](https://github.com/matteolucchini1/Chromie) that can be used for implementing Nicer Pipeline. Although this works well for data processing and extractions of spectrum(after bit of minor changes), but the visualization part doesn't seems to work and generates plots in pdf.
 #### Analysis of the Observation Data
 
-For the analysis of NICER observations, there are some of useful resources [RXTE Cook Book](https://heasarc.gsfc.nasa.gov/docs/xte/recipes/lc_color.html#colors) (Explain How to create and plot light curves, hardness ratios and color-color diagrams),<br> [nicer-ixpe workshop](https://github.com/nmik/nicer-ixpe), [HEASARC-PyXspec notebooks](https://github.com/HEASARC/PyXspec-Jupyter-notebooks), which have various usefull notebooks explaining spectrum, light-curve, Spectral-Timing analysis by leveraging `Stingray`.
+
+For the analysis of NICER observations, there are some of useful resources [Stingray Spectral Timing Notebook](https://github.com/StingraySoftware/notebooks/tree/main/Spectral%20Timing), [RXTE Cook Book](https://heasarc.gsfc.nasa.gov/docs/xte/recipes/lc_color.html#colors) (Explain How to create and plot light curves, hardness ratios and color-color diagrams),<br> [nicer-ixpe workshop](https://github.com/nmik/nicer-ixpe), [HEASARC-PyXspec notebooks](https://github.com/HEASARC/PyXspec-Jupyter-notebooks), which have various usefull notebooks explaining spectrum, light-curve, Spectral-Timing analysis by leveraging `Stingray`.
 
 **UI for the Particular Observation of Database**<br>
 for a particular Observation Database will show the graphical input(PNG file) for quicklook. <br>
@@ -333,7 +334,7 @@ Became familiar with Heasarc, Installing the isolated enviorment for Heasarc -->
 - Go through Nicer-Nustar Analysis Pipeline again, understand the analysis workflow.
 - Ask questions.
 - Complete my draft pull request in stingray.
-
+- Apart from this i will also Write a blog to track my progess every week.
 
 ### Community Bonding Period (May 9th - June 1st)
 - Set up the development environment, including database and API tools.
@@ -345,16 +346,21 @@ Became familiar with Heasarc, Installing the isolated enviorment for Heasarc -->
 - Add tests for the fetching, storing, and filtering functionalities.
 
 ### Week 2 (June 9th - June 15th)
-- 
+- Add a method to verify the correctness of observation files.
+- Implement the Nicer Pipeline to process the Observation.
+- write test for the pipeline to ensure correctness and reliability.
 
 ### Week 3 (June 16th - June 22nd)
-
+- Implement the database schema to store observation data efficiently.
+- Integrating the Stingray methods and Pyspec tools for Analsis of observation.
+-  
 
 
 ### Week 4 (June 23rd - June 29th)
 - Start developing the graphical user interface (GUI) to interact with the database.
 - Design frontend components for querying and displaying observation data.
-- Integrate API with the GUI.
+- Integrate the Reterive API with the GUI.
+
 
 ### Week 5 (June 30th - July 6th)
 
@@ -367,25 +373,25 @@ Became familiar with Heasarc, Installing the isolated enviorment for Heasarc -->
 ### Week 7- Week 8 (July 14th - July 20th)
 
 
-### Week 9 (July 21st - July 27th)
+### Week 8 (July 21st - July 27th)
 
 
-### Week 10 (July 28th - August 3rd)
+### Week 9 (July 28th - August 3rd)
 
 
-### Week 11 (August 4th - August 10th)
+### Week 10 (August 4th - August 10th)
 
 
-### Week 12 (August 11th - August 17th)
+### Week 11 (August 11th - August 17th)
 
 
-### Week 13 (August 18th - August 25th)
+### Week 12 (August 18th - August 25th)
 
 ### _Final Evaluation_
 
 
 ### Post-GSOC
-I am really interested to Open-source and after the Gsoc, i would like to extend to support the Various missions, RXTE, IXPE. This would certainly enhance the tool's capability to handle a broader range of observations and datasets, benefiting the astrophysics community.
+Through the process of making pull requests and solving issues, i have developed a keen interest in Open-source and after the Gsoc, i would like to extend to support the Various missions, RXTE, IXPE. This would certainly enhance the tool's capability to handle a broader range of observations and datasets, benefiting the **AstroPhysics community**.
 
 
 ## GSoC & I
@@ -403,7 +409,11 @@ No, I’m not.
 Yes, I am.
 
 ### **How much time do you plan to invest in the project before, during, and after the Summer of Code?**
+I have summer vacation from May to July. During these three months, I don’t have any major commitments and can dedicate my entire time to GSoC. I plan to devote **40–50 hours per week** (and can allocate more time if needed) to ensure the project is completed within the deadline.
 
+In mid-June, I will be unavailable for a short period due to some family commitments. However, I will discuss this with my mentors in advance and plan my work accordingly.
+
+At the beginning of August, my college semester will resume. Still, I am confident that I will be able to allocate 30–35 hours per week, as there will be no examinations or major commitments.
 
 
 ## Reference
