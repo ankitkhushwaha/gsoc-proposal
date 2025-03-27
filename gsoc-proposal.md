@@ -75,7 +75,11 @@ Currently, researchers analyze **only a few observations at a time**, limiting o
 - Enable **large-scale classification and visualization** of X-ray observations.
 
 ## Final Deliverables
-- Analysis ready software packed with docker and also with manual installtion of Heasarc for more performance.
+- Provide an interactive user interface for exploring the X-ray binaries with multiple scientific metrics.
+- Pipeline for clean event file generation, energy spectra extraction, and light curve analysis using HEASOFT, FTOOLS, and Stingray.
+- Provided as a Docker package for easy setup, with an option for manual installation for better performance.
+- Help the scientific community make **make faster decisions** about future observations.
+
 
 <!-- # Notes
 the ability to visualize source behaviour over time across multiple metrics will guide our choices for which observations are best to make in future, as well as which observatories to use. It will also allow us to make quicker decisions on how to use the data that is already accessible for a given project<br> -->
@@ -231,6 +235,7 @@ for a particular Observation Database will show the graphical input(PNG file) fo
 Although there are a lot more methods to add, that i did'nt included in UI. For example Periodogram modeling, Power colors, Lags and coherence and cross spectrum, Spectral timing, Covariance and RMS spectrum.<br>
 <img src="assets/nicer_obs_ui.png" alt="Nicer Observation UI" width="800px" height="600px"><br>
 
+
 **For handeling the Multiple observations**
 ``` Python
 class Observations:
@@ -270,6 +275,8 @@ class Observations:
 ```
 
 #### Overall directry structure of Cleaned Event files
+
+Note: Although this structure is not final and may change as needed. Because some tools like 'nicerl3-spect' expects the input directories in the format `$OBSID/xti/event_cl`.
 ```
 Logs/
 Products/
@@ -281,13 +288,25 @@ Products/
       PSDs/
       Lightcurves/
 ```
-<!-- LagFreq/ -->
 
+#### Bonus: Logging Pipeline Progress with a Progress Bar
 
+When the Observation are being processed, the user will be able to see. This can be done with the help of [logging](https://docs.python.org/3/library/logging.html). Also logging helps track pipeline execution, aiding debugging and monitoring.
 
+```python
+import logging
 
-
-
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("logs/project.log"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+```
 
 
 <!-- fetch the x ray observation data from archive & write unit tests for this
@@ -303,17 +322,28 @@ my implementation -->
 ### Project Structure
 ```
 project_name/
-│── retrieve_data_pipeline/       # Reterive the data from archive   
-│── scripts/                # Documentation files  
-│── docs/                # Documentation files  
-│── src/                 # Main source code  
-│   │── module1/  
-│   │── module2/  
-│── tests/               # Unit tests  
-│── data/                # Sample datasets (if applicable)  
-│── README.md            # Project overview  
-│── setup.py             # Installation script  
-│── requirements.txt     # Dependencies  
+│── data_pipeline/        # retrieve data from archive  
+│── docs/                 # Documentation files  
+│── missions/             # Mission-specific functions  
+│   ├── nicer/  
+│   │   ├── process/         # Processing of observations  
+│   │   │   ├── tests/    # Tests for processing  
+│   │   │   ├── impl/     # Code for event file reduction  
+│   │   ├── extract/  
+│   │       ├── spec/     # Spectrum extraction  
+│   │       ├── lc/       # Light-curve extraction  
+│   │── Nustar/
+|
+│── frontend/             # GUI components  
+│   ├── main_ui/          # main user interface  
+│   ├── particular_obs/   # UI for individual observations  
+│   ├── retrieve_data_ui/ # UI for data retrieval  
+│── tests/                
+│── data/                 # Sample datasets  
+│── README.md             
+│── setup.py              
+│── requirements.txt      
+│── LICENSE               
 ```
 <!-- 
 The current approach to studying accreting black holes is largely case-by-case, focusing on a limited number of observations and analyzing only one data product at a time. 
@@ -399,7 +429,7 @@ Became familiar with Heasarc, Installing the isolated enviorment for Heasarc -->
 If time allows, I will add support for the RXTE Mission as well. Usefull resource [Chromos](https://github.com/davidgardenier/chromos)
 
 ### Post-GSOC
-Through the process of making pull requests and solving issues, i have developed a keen interest in Open-source and after the Gsoc, i would like to extend to support the Various missions, RXTE, IXPE. This would certainly enhance the tool's capability to handle a broader range of observations and datasets, benefiting the **AstroPhysics community**.
+Through the process of making pull requests and solving issues, i have developed a keen interest in Open-source and after the Gsoc, i would like to extend Database to support the Various missions, RXTE, IXPE. This would certainly enhance the tool's capability to handle a broader range of observations and datasets, benefiting the **AstroPhysics community**.
 
 
 ## GSoC & I
