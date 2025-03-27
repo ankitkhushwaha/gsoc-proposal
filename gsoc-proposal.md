@@ -17,7 +17,8 @@ Mentor: [mgullik](https://github.com/mgullik), [matteobachetti](https://github.c
 
 ## Personal Background
 
-Hey, I'm Ankit Khushwaha, a third year undergraduate at Indian Institute of Technology, Dharwad pursuing Bachelor of Science in Physics. I have been programming for the past three years, primarily using Python. I’ve been using Python for tasks like web scraping, automation, and scientific computing. I'm genuinely interested in open-source and have been contributing to since december 2024.
+Hey, I'm Ankit Khushwaha, a third year undergraduate at [Indian Institute of Technology, Dharwad](https://en.wikipedia.org/wiki/IIT_Dharwad) pursuing **Bachelor of Science in Physics**. I have been programming for the past three years, primarily using Python. I’ve been using Python for tasks like web scraping, automation, and scientific computing. I have started contributing to open-source since december 2024 and have been actively involved since then. I'm genuinely passionate about open-source development and excited to continue contributing.
+
 
 ## My Contribution to Stingray
 
@@ -133,12 +134,12 @@ class Retrieve_Heasarc:
 ```
 
 **This is the UI for the Heasarc data petrieve pipeline.**<br> 
-The user inputs an object name, selects multiple missions, and fetches observational data. The retrieved data appears in a table in pop-up window, allowing the user to select multiple entries and download them simultaneously, and filter their desired data.
+The user inputs an object name, selects multiple missions, and fetches observational data. The retrieved data appears in a table in pop-up window, allowing the user to select multiple entries and download them simultaneously, and filter their desired data. Also user can provide the direct FTP-link/local-path to fetch the observation.
 ![Retrieve Data](assets/retrieve.png)<br>
 
 ### 2. Running the Heasarc Command with python
 For the cleaning of observation files of various sources (eg. Nicer, NuSTAR), we need the HEASoft tools, which runs on bash. But
-these commands also can be run in Python with [HEASoftpy](https://heasarc.gsfc.nasa.gov/lheasoft/heasoftpy/). It provides python wrappers that call the HEASoft tools, allowing for easy integration into other python code.
+these commands also can be run in Python with [HEASoftpy](https://heasarc.gsfc.nasa.gov/lheasoft/heasoftpy/). It provides python wrappers that call the HEASoft tools, allowing for easy integration into python code.
 
 
 ```python
@@ -154,15 +155,12 @@ nicerl3(infile='5010080245')
 Processing the observation files before analysis is a crucial step in extracting useful insights data.<br>
 Heasarc provide [streamlined steps](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/) for processing the Nicer observation files.<br>
 <img src="assets/nicer_pipeline.png" alt="Nicer Data Processing Pipeline" width="500px" height="500px"><br>
-Figure 1.This is Wokrflow showing nicerl3-spect and nicerl3-lc to make standard spectral and light curve products.<br>
 
 Before starting the analysis, we need to clean the event file using `nicerl2`.This tool streamlines the standard pipeline processing of an observation by eliminating intermediate steps.
 
-The extraction of Spectrum can be done from the observation file with [nicerl3-spect](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/nicerl3-spect/)
+The extraction of Spectrum can be done from the observation file with [nicerl3-spect](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/nicerl3-spect/), this task requires the output of the `nicerl2` task. It will look in the supplied input directory name for the subdirectory xti/event_cl.
 
-The `nicerl3-spect` task requires the output of the `nicerl2` task. The task will look in the supplied input directory name for the subdirectory xti/event_cl.
-
-Upon completion, nicerl3-spect will processed the `spectrum`, `ARF`, `RMF`, `SCORPEON background`, `background RMF`, `Sky ARF`, `"Load" file`, `Graphical output` products.
+Upon completion, `nicerl3-spect` will processed the `spectrum`, `ARF`, `RMF`, `SCORPEON background`, `background RMF`, `Sky ARF`, `"Load" file`, `Graphical output` products.
 
 Similarly Extraction of Power spectrum can be done with `nicerl3-lc`.
 
@@ -222,16 +220,15 @@ class NicerDataPipeline:
 ```
 
 
-**Note**: There is more useful [resource](https://github.com/matteolucchini1/Chromie) that can be used for implementing Nicer Pipeline. Although this works well for data processing and extractions of spectrum(after bit of minor changes), but the visualization part doesn't seems to work and generates plots in pdf.
+**Note**: There is more useful [resource](https://github.com/matteolucchini1/Chromie) that can be used for implementing Nicer Pipeline. Although this works well for data processing and extractions of spectrum(after bit of minor changes), but the visualization part doesn't seems to work well and generates plots in pdf.
+
 #### Analysis of the Observation Data
 
-
-For the analysis of NICER observations, there are some of useful resources [Stingray Spectral Timing Notebook](https://github.com/StingraySoftware/notebooks/tree/main/Spectral%20Timing), [RXTE Cook Book](https://heasarc.gsfc.nasa.gov/docs/xte/recipes/lc_color.html#colors) (Explain How to create and plot light curves, hardness ratios and color-color diagrams),<br> [nicer-ixpe workshop](https://github.com/nmik/nicer-ixpe), [HEASARC-PyXspec notebooks](https://github.com/HEASARC/PyXspec-Jupyter-notebooks), which have various usefull notebooks explaining spectrum, light-curve, Spectral-Timing analysis by leveraging `Stingray`.
+For the analysis of NICER observations, there are some of useful resources [Stingray Spectral Timing Notebook](https://github.com/StingraySoftware/notebooks/tree/main/Spectral%20Timing), [RXTE Cook Book](https://heasarc.gsfc.nasa.gov/docs/xte/recipes/lc_color.html#colors) (Explain How to create and plot light curves, hardness ratios, Hardness-intensity diagram, Periodogram modeling and cross spectrum, Power colors and color-color diagrams),<br> [nicer-ixpe workshop](https://github.com/nmik/nicer-ixpe), [HEASARC-PyXspec notebooks](https://github.com/HEASARC/PyXspec-Jupyter-notebooks), which have various usefull notebooks explaining spectrum, light-curve, Spectral-Timing analysis by leveraging `Stingray`.
 
 **UI for the Particular Observation of Database**<br>
 for a particular Observation Database will show the graphical input(PNG file) for quicklook. <br>
-Although there are alot more methods to add, that i did'nt included in UI. For example Periodogram modeling, Power colors, Lags and coherence and cross spectrum, Spectral timing, Covariance and RMS spectrum.<br>
-(The intuition for these method i have taken from [here](https://github.com/nmik/nicer-ixpe/blob/main/NICER/spectral_timing/Spectral%20Timing%20Exploration.ipynb)) <br>
+Although there are a lot more methods to add, that i did'nt included in UI. For example Periodogram modeling, Power colors, Lags and coherence and cross spectrum, Spectral timing, Covariance and RMS spectrum.<br>
 <img src="assets/nicer_obs_ui.png" alt="Nicer Observation UI" width="800px" height="600px"><br>
 
 **For handeling the Multiple observations**
@@ -335,10 +332,14 @@ Became familiar with Heasarc, Installing the isolated enviorment for Heasarc -->
 - Ask questions.
 - Complete my draft pull request in stingray.
 - Apart from this i will also Write a blog to track my progess every week.
+- I will discuss the project progress in every week, issues that i will be facing.
 
 ### Community Bonding Period (May 9th - June 1st)
-- Set up the development environment, including database and API tools.
+- Discuss the project implementation with mentors in detail.
 - Finalize project goals and refine the implementation plan.
+- Set up the development environment, including database and API tools.
+- Document the installtion process of Heasarc Software.
+- Go through the stingray API documentation to understand its functionalities.
 
 ### Week 1 (June 2nd - June 8th)
 - Implement scripts to fetch and store observations from HEASARC. 
@@ -348,47 +349,54 @@ Became familiar with Heasarc, Installing the isolated enviorment for Heasarc -->
 ### Week 2 (June 9th - June 15th)
 - Add a method to verify the correctness of observation files.
 - Implement the Nicer Pipeline to process the Observation.
-- write test for the pipeline to ensure correctness and reliability.
+- write test for nicer pipeline to ensure correctness and reliability.
 
 ### Week 3 (June 16th - June 22nd)
 - Implement the database schema to store observation data efficiently.
-- Integrating the Stingray methods and Pyspec tools for Analsis of observation.
--  
+- Implement the Nustar Pipeline to process the nustar observations.
+- write tests for nustar pipline.
+- Integrating the Stingray methods and Pyspec tools for Analsis of observations.
 
 
 ### Week 4 (June 23rd - June 29th)
-- Start developing the graphical user interface (GUI) to interact with the database.
-- Design frontend components for querying and displaying observation data.
-- Integrate the Reterive API with the GUI.
-
+<!-- - Add the various Analysis method, models -->
+- Implement various analysis methods and models discussed in [Spectral Timing Notebook](https://github.com/StingraySoftware/notebooks/tree/main/Spectral%20Timing).
+- Tests these method and write tests for these changes.
 
 ### Week 5 (June 30th - July 6th)
+- Start developing the graphical user interface (GUI) to interact with the database.
+- Design frontend components for querying and displaying observation data.
+- Integrate the Retrieve_Heasarc API with the GUI.
+- Write test for the retrieve dashboard. 
 
 
 ### Week 6 (July 7th - July 13th)
-
+- Begin with Implementing the Main UI of Database, Intergrating it with codebase.
+- Implement the Analysis UI for particular Observation.
+- Finish tests for both UI. 
 
 ### _Midterm Evaluation_
 
-### Week 7- Week 8 (July 14th - July 20th)
+### Week 7- Week 8 (July 14th - July 27th)
+- Refactoring the UI for advance analysis for Nicer, Nustar Missions.
+- Testing these changes.
 
+### Week 9 - Week 10 (July 28th - August 10th)
+- Implement and test machine learning algorithms to analyze X-ray observations.
+- Select and evaluate ML models for anomaly detection, classification, or feature extraction.
+- Evaluate model performance using cross-validation and evaluation metrics.
 
-### Week 8 (July 21st - July 27th)
+### Week 11 - Week 12(August 11th - August 17th)
+- Testing the entire database and fixing bugs. 
+- Optimize the pipeline and UI performance for better efficiency.
+- Write user and developer facing documentation.
+- Prepare and submit the final project report and blog post.
 
-
-### Week 9 (July 28th - August 3rd)
-
-
-### Week 10 (August 4th - August 10th)
-
-
-### Week 11 (August 11th - August 17th)
-
-
-### Week 12 (August 18th - August 25th)
 
 ### _Final Evaluation_
 
+### Bonus
+If time allows, I will add support for the RXTE Mission as well. Usefull resource [Chromos](https://github.com/davidgardenier/chromos)
 
 ### Post-GSOC
 Through the process of making pull requests and solving issues, i have developed a keen interest in Open-source and after the Gsoc, i would like to extend to support the Various missions, RXTE, IXPE. This would certainly enhance the tool's capability to handle a broader range of observations and datasets, benefiting the **AstroPhysics community**.
@@ -411,18 +419,20 @@ Yes, I am.
 ### **How much time do you plan to invest in the project before, during, and after the Summer of Code?**
 I have summer vacation from May to July. During these three months, I don’t have any major commitments and can dedicate my entire time to GSoC. I plan to devote **40–50 hours per week** (and can allocate more time if needed) to ensure the project is completed within the deadline.
 
-In mid-June, I will be unavailable for a short period due to some family commitments. However, I will discuss this with my mentors in advance and plan my work accordingly.
+In mid-June, I will be unavailable for a short period(3-4 days) due to some family commitments. However, I will discuss this with my mentors in advance and plan my work accordingly.
 
 At the beginning of August, my college semester will resume. Still, I am confident that I will be able to allocate 30–35 hours per week, as there will be no examinations or major commitments.
 
 
 ## Reference
+- [Stingray Spectral Timing Notebook](https://github.com/StingraySoftware/notebooks/tree/main/Spectral%20Timing)
 - [Heasarc Software](https://heasarc.gsfc.nasa.gov/docs/software/lheasoft/download-go.html)  
 - [hwrap script](https://heasarc.gsfc.nasa.gov/docs/software/lheasoft/hwrap.html)  
 - [Astroquery.Heasarc](https://astroquery.readthedocs.io/en/latest/heasarc/heasarc.html)  
 - [HEASoftpy](https://heasarc.gsfc.nasa.gov/lheasoft/heasoftpy/)  
 - [Nicer Analysis steps](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/)  
 - [Chromie](https://github.com/matteolucchini1/Chromie)  
+- [Chromos](https://github.com/davidgardenier/chromos)
 - [RXTE Cook Book](https://heasarc.gsfc.nasa.gov/docs/xte/recipes/lc_color.html#colors)  
 - [HEASARC-PyXspec notebooks](https://github.com/HEASARC/PyXspec-Jupyter-notebooks)  
 - [nicer-ixpe](https://github.com/nmik/nicer-ixpe/)  
