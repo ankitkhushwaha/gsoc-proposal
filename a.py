@@ -155,3 +155,31 @@ class Observations:
         """
         Saves the Plot in Graphical Output.
         """
+
+class XRayClassifier:
+    def __init__(self, obs):
+        """
+        Initialize the classifier with a trained model.
+        
+        Inputs a Observations class instance checks whether required file exist or not.
+        Collects required features(Power spectrum, light curve) 
+        """
+
+    def preprocess_features(self, *features):
+        """
+        Preprocess the input features before prediction, and
+        will process Multiple observation features at once
+        """
+        # Standardize the features
+        if self.scaler:
+            features = self.scaler.transform([features])
+        else:
+            features = np.array([features])
+        return features
+
+    def predict(self, *processed_features):
+        """
+        Predict the observation state based on standardized input features.
+        """
+        prediction = self.model.predict(processed_features)
+        return prediction

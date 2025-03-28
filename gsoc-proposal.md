@@ -226,6 +226,36 @@ class NicerDataPipeline:
 
 **Note**: There is more useful [resource](https://github.com/matteolucchini1/Chromie) that can be used for implementing Nicer Pipeline. Although this works well for data processing and extractions of spectrum(after bit of minor changes), but the visualization part doesn't seems to work well and generates plots in pdf.
 
+
+#### Plotting and visulation
+
+For Plotting and visulation, Heasarc provides command line tool `XSPEC` , which we will be using for analyzing X-ray spectra. We can run `XSPEC` commands with [PyXspec](https://heasarc.gsfc.nasa.gov/docs/xanadu/xspec/python/html/index.html), which provides the Python interface for `XSPEC`.
+
+```python
+from xspec import *
+import matplotlib.pyplot as plt
+
+spectrum = Spectrum("source.pha")
+spectrum.response = "response.rmf"
+spectrum.background = "background.pha"
+
+model = Model("powerlaw")
+Fit.perform()
+
+# Suppress XSPEC plot window (extract data for Matplotlib)
+Plot.device = "/null"     
+# Extract energy bins, rates, and errors from XSPEC
+energies = Plot.x()
+energy_err = Plot.xErr()
+rates = Plot.y()
+errors = Plot.yErr()
+
+# Plot using Matplotlib
+plt.xscale("log")
+plt.yscale("log")
+plt.errorbar(energies,rates, xerr=energy_err, yerr=errors, fmt='.')
+```
+
 #### Analysis of the Observation Data
 
 For the analysis of NICER observations, there are some of useful resources [Stingray Spectral Timing Notebook](https://github.com/StingraySoftware/notebooks/tree/main/Spectral%20Timing), [RXTE Cook Book](https://heasarc.gsfc.nasa.gov/docs/xte/recipes/lc_color.html#colors) (Explain How to create and plot light curves, Hardness Ratios, Hardness-intensity diagram, Periodogram modeling and cross spectrum, Power colors and color-color diagrams),<br> [nicer-ixpe workshop](https://github.com/nmik/nicer-ixpe), [HEASARC-PyXspec notebooks](https://github.com/HEASARC/PyXspec-Jupyter-notebooks), which have various usefull notebooks explaining spectrum, light-curve, Spectral-Timing analysis by leveraging `Stingray`.
@@ -290,7 +320,7 @@ Products/
       Lightcurves/
 ```
 
-#### Bonus: Logging Pipeline Progress with a Progress Bar
+#### Logging Pipeline Progress with a Progress Bar
 
 When the Observation are being processed, the user will be able to see. This can be done with the help of [logging](https://docs.python.org/3/library/logging.html). Also logging helps track pipeline execution, aiding debugging and monitoring.
 
@@ -309,7 +339,53 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 ```
 
+### Machine Learning implementation
 
+#### Processing the Raw data
+
+To classify the observations, we first need to clean the raw event files. This can be done using `nicerl2` for NICER observations.
+
+Next, we extract the spectrum, light curve, and power spectra from each observation and standardize the extracted features.
+
+#### Training and Evaluation
+The extracted features will be used to train a machine learning algorithm and a CNN neural network, for classifying different states of the source.
+
+For training, we will
+- **Splitting the data** into training and validation sets.
+- Training the model using supervised or unsupervised learning approaches.
+- Evaluating the model’s performance using standard metrics like accuracy, F1-score, and confusion matrices.
+
+There are several research papers [[1]](https://arxiv.org/abs/2012.06934), [[2]](https://iopscience.iop.org/article/10.3847/1538-4357/ac6184) that discuss X-ray binary classification using KNN and SVM models. [GitHub Repository](https://github.com/zdebeurs/3ML_methods_for_XRB_classification)
+
+```python
+class XRayClassifier:
+    def __init__(self, obs):
+        """
+        Initialize the classifier with a trained model.
+        
+        Inputs a Observations class instance checks whether required file exist or not.
+        Collects required features(Power spectrum, light curve) 
+        """
+
+    def preprocess_features(self, *features):
+        """
+        Preprocess the input features before prediction, and
+        will process Multiple observation features at once
+        """
+        # Standardize the features
+        if self.scaler:
+            features = self.scaler.transform([features])
+        else:
+            features = np.array([features])
+        return features
+
+    def predict(self, *processed_features):
+        """
+        Predict the observation state based on standardized input features.
+        """
+        prediction = self.model.predict(processed_features)
+        return prediction
+```
 <!-- fetch the x ray observation data from archive & write unit tests for this
 clean the event files or spectral data using HEASOFT tools and Stingray functionality  & write unit tests for this
 storing it in the database  & write unit tests for this 
