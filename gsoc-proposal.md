@@ -62,7 +62,7 @@ Apart from this I have also guided the newcomers on Slack by guiding them on how
 
 ### Abstract
 
-The current approach to studying accreting black holes by considering only a few observations and only one data product at a time. This case-by-case approach is useful to study specific characteristics of the sources such as measuring the spin and mass of the black hole. However, this approach is insufficient to gain an understanding of the general phenomenology shown by accreting black holes. This project proposes the development of an interactive tool that systematically analyzes, stores, and organizes key data products from multiple observations. By enabling comprehensive visualization and comparison of X-ray spectral and timing properties over time, this tool will facilitate more efficient scientific decision-making and a deeper understanding of black hole evolution.
+The current approach to studying accreting black holes is by considering only a few observations and only one data product at a time. This case-by-case approach is useful to study specific characteristics of the sources such as measuring the spin and mass of the black hole. However, this approach is insufficient to gain an understanding of the general phenomenology shown by accreting black holes. This project proposes the development of an interactive tool that systematically analyzes, stores, and organizes key data products from multiple observations. By enabling comprehensive visualization and comparison of X-ray spectral and timing properties over time, this tool will facilitate more efficient scientific decision-making and a deeper understanding of black hole evolution.
 
 
 ## Benefits to the Community
@@ -71,13 +71,13 @@ Currently, researchers analyze **only a few observations at a time**, limiting o
 
 - Provide a **single framework** to explore multiple data products (e.g., spectral and timing properties).
 - **Speed up scientific decision-making** by allowing easy comparison across different telescopes.
-- Allow researchers to **discover patterns** and classify observations using **machine learning (ML)**.
+- Allow researchers to **discover patterns** and classify observations using **machine learning**.
 - Enable **large-scale classification and visualization** of X-ray observations.
 
 ## Final Deliverables
 - Provide an interactive user interface for exploring the X-ray binaries with multiple scientific metrics.
 - Pipeline for clean event file generation, energy spectra extraction, and light curve analysis using HEASOFT, FTOOLS, and Stingray.
-- Provided as a Docker package for easy setup, with an option for manual installation for better performance.
+- Software with a Docker package for easy setup, with an option for manual installation for better performance.
 - Help the scientific community make **make faster decisions** about future observations.
 
 
@@ -93,7 +93,7 @@ This is [instruction](link) that i wrote for the installtion of Heasarc Software
 
 
 ### 1. **Fetch the X-ray observation data from archive**<br>
-We will query the the observation data from Heasarc [FTP Website](https://heasarc.gsfc.nasa.gov/FTP/nicer/data/obs/) by [Astroquery.Heasarc](https://astroquery.readthedocs.io/en/latest/heasarc/heasarc.html).
+We will query the the observation data from Heasarc [FTP Website](https://heasarc.gsfc.nasa.gov/FTP/nicer/data/obs/) using [astroquery.heasarc](https://astroquery.readthedocs.io/en/latest/heasarc/heasarc.html).
 
 ```python
 from astroquery.heasarc import Heasarc
@@ -164,7 +164,7 @@ Before starting the analysis, we need to clean the event file using `nicerl2`.Th
 
 The extraction of Spectrum can be done from the observation file with [nicerl3-spect](https://heasarc.gsfc.nasa.gov/docs/nicer/analysis_threads/nicerl3-spect/), this task requires the output of the `nicerl2` task. It will look in the supplied input directory name for the subdirectory xti/event_cl.
 
-Upon completion, `nicerl3-spect` will processed the `spectrum`, `ARF`, `RMF`, `SCORPEON background`, `background RMF`, `Sky ARF`, `"Load" file`, `Graphical output` products.
+Upon completion, `nicerl3-spect` produces the `spectrum`, `ARF`, `RMF`, `SCORPEON background`, `background RMF`, `Sky ARF`, `"Load" file`, `Graphical output` products.
 
 Similarly Extraction of Power spectrum can be done with `nicerl3-lc`.
 
@@ -228,7 +228,7 @@ class NicerDataPipeline:
 
 #### Analysis of the Observation Data
 
-For the analysis of NICER observations, there are some of useful resources [Stingray Spectral Timing Notebook](https://github.com/StingraySoftware/notebooks/tree/main/Spectral%20Timing), [RXTE Cook Book](https://heasarc.gsfc.nasa.gov/docs/xte/recipes/lc_color.html#colors) (Explain How to create and plot light curves, hardness ratios, Hardness-intensity diagram, Periodogram modeling and cross spectrum, Power colors and color-color diagrams),<br> [nicer-ixpe workshop](https://github.com/nmik/nicer-ixpe), [HEASARC-PyXspec notebooks](https://github.com/HEASARC/PyXspec-Jupyter-notebooks), which have various usefull notebooks explaining spectrum, light-curve, Spectral-Timing analysis by leveraging `Stingray`.
+For the analysis of NICER observations, there are some of useful resources [Stingray Spectral Timing Notebook](https://github.com/StingraySoftware/notebooks/tree/main/Spectral%20Timing), [RXTE Cook Book](https://heasarc.gsfc.nasa.gov/docs/xte/recipes/lc_color.html#colors) (Explain How to create and plot light curves, Hardness Ratios, Hardness-intensity diagram, Periodogram modeling and cross spectrum, Power colors and color-color diagrams),<br> [nicer-ixpe workshop](https://github.com/nmik/nicer-ixpe), [HEASARC-PyXspec notebooks](https://github.com/HEASARC/PyXspec-Jupyter-notebooks), which have various usefull notebooks explaining spectrum, light-curve, Spectral-Timing analysis by leveraging `Stingray`.
 
 **UI for the Particular Observation of Database**<br>
 for a particular Observation Database will show the graphical input(PNG file) for quicklook. <br>
@@ -277,6 +277,7 @@ class Observations:
 #### Overall directry structure of Cleaned Event files
 
 Note: Although this structure is not final and may change as needed. Because some tools like 'nicerl3-spect' expects the input directories in the format `$OBSID/xti/event_cl`.
+
 ```
 Logs/
 Products/
@@ -429,7 +430,7 @@ Became familiar with Heasarc, Installing the isolated enviorment for Heasarc -->
 If time allows, I will add support for the RXTE Mission as well. Usefull resource [Chromos](https://github.com/davidgardenier/chromos)
 
 ### Post-GSOC
-Through the process of making pull requests and solving issues, i have developed a keen interest in Open-source and after the Gsoc, i would like to extend Database to support the Various missions, RXTE, IXPE. This would certainly enhance the tool's capability to handle a broader range of observations and datasets, benefiting the **AstroPhysics community**.
+Through the process of solving issues and making pull requests , i have developed a keen interest in Open-source and after the GSOC, i would like to extend Database to support the Various missions, RXTE, IXPE as well. This would certainly enhance the tool's capability to handle a broader range of observations and datasets, benefiting the **AstroPhysics community**.
 
 
 ## GSoC & I
@@ -447,7 +448,7 @@ No, I’m not.
 Yes, I am.
 
 ### **How much time do you plan to invest in the project before, during, and after the Summer of Code?**
-I have summer vacation from May to July. During these three months, I don’t have any major commitments and can dedicate my entire time to GSoC. I plan to devote **40–50 hours per week** (and can allocate more time if needed) to ensure the project is completed within the deadline.
+I have summer vacation from May to July. During these three months, I don’t have any major commitments and can dedicate my entire time to GSoC. I plan to devote **40–50 hours per week** (and will allocate more time if needed) to ensure the project is completed within the deadline.
 
 In mid-June, I will be unavailable for a short period(3-4 days) due to some family commitments. However, I will discuss this with my mentors in advance and plan my work accordingly.
 
