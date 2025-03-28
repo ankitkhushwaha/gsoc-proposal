@@ -450,7 +450,7 @@ Yes, I am.
 ### **How much time do you plan to invest in the project before, during, and after the Summer of Code?**
 I have summer vacation from May to July. During these three months, I don’t have any major commitments and can dedicate my entire time to GSoC. I plan to devote **40–50 hours per week** (and will allocate more time if needed) to ensure the project is completed within the deadline.
 
-In mid-June, I will be unavailable for a short period(3-4 days) due to some family commitments. However, I will discuss this with my mentors in advance and plan my work accordingly.
+In mid-June, I will be unavailable for a short period(3-4 days) due to prior personal obligations. However, I will discuss this with my mentors in advance and plan my work accordingly.
 
 At the beginning of August, my college semester will resume. Still, I am confident that I will be able to allocate 30–35 hours per week, as there will be no examinations or major commitments.
 
