@@ -183,3 +183,154 @@ class XRayClassifier:
         """
         prediction = self.model.predict(processed_features)
         return prediction
+
+
+import joblib
+
+CACHE_DIR = "cache"
+CACHE_EXPIRY = 600  # Expire cache after 10 minutes
+
+if not os.path.exists(CACHE_DIR):
+    os.makedirs(CACHE_DIR)
+
+def update_access_time(filepath):
+    """
+    Update the last access time of the cached plot.
+    """
+    os.utime(filepath, None)
+
+def clean_cache():
+    """
+    Remove cached plots that have not been accessed recently.
+    """
+    current_time = time.time()
+    for filename in os.listdir(CACHE_DIR):
+        filepath = os.path.join(CACHE_DIR, filename)
+        last_access_time = os.path.getatime(filepath)
+        
+        if current_time - last_access_time > CACHE_EXPIRY:
+            os.remove(filepath)
+
+def generate_plot(param):
+    """Generate and cache plots while tracking last access time.
+
+    """
+    cache_path = os.path.join(CACHE_DIR, f"plot_{param}.pkl")
+    
+    # If cached, update access time and return cached plot
+    if os.path.exists(cache_path):
+        print(f"Loading cached plot for param: {param}")
+        update_access_time(cache_path)
+        return joblib.load(cache_path)
+
+    # Generate a new plot if not in cache
+    print(f"Generating new plot for param: {param}")
+    fig, ax = plt.subplots()
+    ax.plot([1, 2, 3], [4 * param, 5 * param, 6 * param])
+    ax.set_title(f"Plot for Param {param}")
+
+    # Save to cache
+    joblib.dump(fig, cache_path)
+    update_access_time(cache_path)
+    return fig
+
+# Periodically clean unused plots
+clean_cache()
+
+# Example: Generate or retrieve a plot
+plot = generate_plot(2)
+plot.show()
+
+
+
+import joblib
+from functools import wraps
+
+CACHE_DIR = "plot_cache"
+CACHE_EXPIRY = 600  # 10 minutes
+
+if not os.path.exists(CACHE_DIR):
+    os.makedirs(CACHE_DIR)
+
+def update_access_time(filepath):
+    """Update the last access time of a cached file."""
+    os.utime(filepath, None)
+
+def clean_cache():
+    """Remove cached files that have not been accessed recently."""
+    current_time = time.time()
+    for filename in os.listdir(CACHE_DIR):
+        filepath = os.path.join(CACHE_DIR, filename)
+        last_access_time = os.path.getatime(filepath)
+        
+        if current_time - last_access_time > CACHE_EXPIRY:
+            os.remove(filepath)
+
+def cache_plot(func):
+    """Decorator to cache plots while tracking last access time."""
+    @wraps(func)
+    def wrapper(param):
+        cache_path = os.path.join(CACHE_DIR, f"plot_{param}.pkl")
+
+        # If cached, update access time and return cached plot
+        if os.path.exists(cache_path):
+            update_access_time(cache_path)
+            return joblib.load(cache_path)
+
+        # Generate a new plot if not in cache
+        fig = func(param)
+
+        # Save the plot to cache
+        joblib.dump(fig, cache_path)
+        update_access_time(cache_path)
+        return fig
+
+    return wrapper
+
+
+import heasoftpy as hsp
+from heasoftpy.nustar import nupipeline
+
+class NustarDataPipeline:
+    """
+    Completer data Reduction/extraction Pipeline for Nustar
+    """
+    def __init__(self, obs_path, **kwargs):
+        # Same as NicerDataPipeline
+
+    def data_reduction(self, infile, **kwargs):
+        """
+        The the data processing and Reduces the raw data
+        Save it in Output Obs directry using `nicerl2`
+        """
+        out = nupipeline(indir=self.indir, outdir=self.outdir, steminputs=self.stem)
+        # A return code indicates that the task run with success!
+        return out, out.returncode  
+
+    # To extract a light curve for the source
+    # we need to create a source and background region files.
+    # This Can be done with SAOImage DS9 or 
+    def create_region_files(self):
+        # write region files
+        region = 'circle(21:27:46.406,+56:56:31.38,150")'
+        with open('src.reg', 'w') as fp: fp.write(region)
+
+        region = 'annulus(21:27:46.406,+56:56:31.38,180",300")'
+        with open('bgd.reg', 'w') as fp: fp.write(region)
+
+    def extract_lc(self):
+        # initialize the task instance
+        nuproducts = hsp.HSPTask('nuproducts')
+
+        params = {
+            'indir'         : f'{obsid}_p/event_cl',
+            'outdir'        : f'{obsid}_p/lc',
+            'instrument'    : 'FPMA',
+            'steminputs'    : f'nu{obsid}',
+            'outdir'        : f'{obsid}_p/lc',
+            'binsize'       : 256,
+            'bkgextract'    : 'yes',
+            'srcregionfile' : 'src.reg',
+            'bkgregionfile' : 'bgd.reg',
+        }
+        out = nuproducts(params, noprompt=True, verbose=True)
